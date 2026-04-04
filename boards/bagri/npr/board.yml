@@ -1,0 +1,5 @@
+board:
+  name: npr
+  vendor: bagri
+  socs:
+  - name: nrf52840

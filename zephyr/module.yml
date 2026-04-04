@@ -1,0 +1,9 @@
+name: zmk-keyboard-npr
+build:
+  depends:
+    - zmk-output-behavior-listener
+    - zmk-keyboards # from joelspadin
+  settings:
+    board_root: .
+    dts_root: .
+  cmake: src

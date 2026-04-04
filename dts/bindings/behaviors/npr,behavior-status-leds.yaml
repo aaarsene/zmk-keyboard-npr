@@ -1,0 +1,5 @@
+description: NP-R Status LEDs Behavior
+
+compatible: "npr,behavior-status-leds"
+
+include: two_param.yaml

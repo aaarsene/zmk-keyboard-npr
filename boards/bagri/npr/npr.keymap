@@ -1,0 +1,117 @@
+#include <behaviors.dtsi>
+#include <behaviors/soft_off.dtsi>
+#include <behaviors/npr_status_leds.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk_keyboard_npr/status_leds.h>
+
+#define OUTPUT_SOURCE_LAYER_STATE_CHANGE        1
+#define OUTPUT_SOURCE_POSITION_STATE_CHANGE     2
+#define OUTPUT_SOURCE_KEYCODE_STATE_CHANGE      3
+#define OUTPUT_SOURCE_MOUSE_BUTTON_STATE_CHANGE 4
+#define OUTPUT_SOURCE_MOUSE_WHEEL_STATE_CHANGE  5
+#define OUTPUT_SOURCE_TRANSPORT                 6
+
+&soft_off {
+    hold-time-ms = <2000>; // Only turn off it the key is held for 2 seconds or longer.
+};
+
+/ {
+    sol_on: sol_on {
+        compatible = "zmk,output-behavior-generic"; 
+        #binding-cells = <0>;
+        device = <&output_sol>; 
+        time-to-live-ms = <20>; // (dwell time)
+        force = <1>;
+    };
+    
+    sol_listener {
+        compatible = "zmk,output-behavior-listener";
+        layers = < 0 1 2 >;
+        sources = < OUTPUT_SOURCE_POSITION_STATE_CHANGE >;
+    
+        bindings = < &sol_on >;
+    };
+
+    combos {
+        compatible = "zmk,combos";
+        config_layer {
+            timeout-ms = <50>;
+            key-positions = <3 4>;
+            bindings = <&to 3>;
+        };
+        combo_off {
+            timeout-ms = <200>;
+            key-positions = <5 6>;
+            bindings = <&soft_off>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+        default_layer {
+                // -------------------------
+                // | ESC | CAL | TAB | PEL |
+                // | NUM |  /  |  *  |  -  |
+                // |  7  |  8  |  9  |  +  |
+                // |  4  |  5  |  6  |     |
+                // |  1  |  2  |  3  | ENT |
+                // |    0      |  .        |
+                // -------------------------
+            bindings = <
+                            &trans       &to 1           &to 2
+                &kp ESC     &none        &none           &kp BSPC
+                &kp KP_NLCK &kp KP_SLASH &kp KP_ASTERISK &kp KP_MINUS
+                &kp KP_N7   &kp KP_N8    &kp KP_N9       &kp KP_PLUS
+                &kp KP_N4   &kp KP_N5    &kp KP_N6       &kp KP_PLUS
+                &kp KP_N1   &kp KP_N2    &kp KP_N3       &kp KP_ENTER
+                &kp KP_N0   &kp KP_N0    &kp KP_DOT      &kp KP_ENTER
+            >
+            ;
+        };
+        layer1 {
+            bindings = <
+                       &to 0  &trans &to 2
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+            >
+            ;
+        };
+        layer2 {
+            bindings = <
+                       &to 0  &to 1  &trans
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+                &trans &trans &trans &trans
+            >
+            ;
+        };
+        layer3 {
+            display-name = "Config";
+            bindings = <
+                                    &to 0                 &to 1                 &to 2
+                &bt BT_SEL 0        &bt BT_SEL 1          &bt BT_SEL 2          &bt BT_SEL 3
+                &npr_leds PRF_SET 1 &npr_leds PRF_SET 2   &npr_leds PRF_SET 3   &npr_leds PRF_SET 4
+                &none               &npr_leds BRT_DEC     &npr_leds BRT_INC     &none
+                &none               &npr_leds PRF_SET 0   &npr_leds PRF_NXT     &none
+                &none               &npr_leds HSV_SAT_0 0 &npr_leds HSV_VAL_0 0 &none
+                &none               &none                 &npr_leds HSV_HUE_0 0 &none
+            >
+            ;
+        };
+        layer4 {
+            status = "reserved";
+        };
+        layer5 {
+            status = "reserved";
+        };
+    };
+};

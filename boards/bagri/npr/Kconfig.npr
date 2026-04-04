@@ -1,0 +1,9 @@
+# NPR board configuration
+
+# SPDX-License-Identifier: MIT
+
+config BOARD_NPR
+    select SOC_NRF52840_QIAA
+    imply RETAINED_MEM
+    imply RETENTION
+    imply RETENTION_BOOT_MODE

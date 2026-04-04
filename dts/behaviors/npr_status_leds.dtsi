@@ -1,0 +1,10 @@
+/ {
+    behaviors {
+        // Behavior can be invoked on peripherals, so name must be <= 8 characters.
+        npr_leds: npr_leds {
+            compatible = "npr,behavior-status-leds";
+            #binding-cells = <2>;
+            display-name = "NP-R Status LEDs";
+        };
+    };
+};

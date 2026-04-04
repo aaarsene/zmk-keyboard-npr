@@ -1,0 +1,39 @@
+#define PRF_SET_CMD 0
+#define PRF_CYCLE_CMD 1
+#define BRT_INC_CMD 2
+#define BRT_DEC_CMD 3
+
+#define HSV_SET_HUE_0_CMD 4
+#define HSV_SET_HUE_1_CMD 5
+#define HSV_SET_HUE_2_CMD 6
+
+#define HSV_SET_SAT_0_CMD 7
+#define HSV_SET_SAT_1_CMD 8
+#define HSV_SET_SAT_2_CMD 9
+
+#define HSV_SET_VAL_0_CMD 10
+#define HSV_SET_VAL_1_CMD 11
+#define HSV_SET_VAL_2_CMD 12
+
+#define OFF_CMD 13
+
+#define PRF_SET PRF_SET_CMD
+
+#define PRF_NXT PRF_CYCLE_CMD 0
+
+#define BRT_INC BRT_INC_CMD 0
+#define BRT_DEC BRT_DEC_CMD 0
+
+#define HSV_HUE_0 HSV_SET_HUE_0_CMD
+#define HSV_HUE_1 HSV_SET_HUE_1_CMD
+#define HSV_HUE_2 HSV_SET_HUE_2_CMD
+
+#define HSV_SAT_0 HSV_SET_SAT_0_CMD
+#define HSV_SAT_1 HSV_SET_SAT_1_CMD
+#define HSV_SAT_2 HSV_SET_SAT_2_CMD
+
+#define HSV_VAL_0 HSV_SET_VAL_0_CMD
+#define HSV_VAL_1 HSV_SET_VAL_1_CMD
+#define HSV_VAL_2 HSV_SET_VAL_2_CMD
+
+#define OFF OFF_CMD 0

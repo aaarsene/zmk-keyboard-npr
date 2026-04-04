@@ -1,0 +1,11 @@
+manifest:
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+  projects:
+    - name: zmk-output-behavior-listener
+      remote: badjeff
+      revision: main
+    - name: zmk-keyboards # used for the numlock led
+      remote: joelspadin
+      revision: main

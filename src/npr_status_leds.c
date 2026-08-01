@@ -339,6 +339,7 @@ static int npr_status_leds_init(void) {
         return -ENODEV;
     }
 
+
     config = (struct npr_status_leds_config){
         active_led_profile: 1, // start at 1 because 0 is the custom profile
         max_brightness: DEFAULT_MAX_BRIGHTNESS,
@@ -357,6 +358,7 @@ static int npr_status_leds_init(void) {
 #if IS_ENABLED(CONFIG_SETTINGS)
     k_work_init_delayable(&npr_status_leds_save_work, npr_status_leds_save_state_work);
 #endif
+
 
     if (state.on) {
         k_timer_start(&status_leds_tick, K_NO_WAIT, K_MSEC(50));
@@ -379,6 +381,8 @@ int npr_status_leds_on(void) {
         return -ENODEV;
 
     if (ext_power != NULL) {
+        k_msleep(5); // Without this delay the power is not enabled after sleep
+
         int rc = ext_power_enable(ext_power);
         if (rc != 0) {
             LOG_ERR("Unable to enable EXT_POWER: %d", rc);
@@ -422,12 +426,16 @@ int npr_status_leds_off(void) {
 }
 
 static int npr_status_leds_auto_state(bool target_wake_state) {
+    static bool is_awake = true;
+
     // wake up event while awake, or sleep event while sleeping -> no-op
-    if (target_wake_state == state.on) {
+    if (target_wake_state == is_awake) {
         return 0;
     }
 
-    if (target_wake_state) {
+    is_awake = target_wake_state;
+
+    if (is_awake) {
         return npr_status_leds_on();
     } else {
         return npr_status_leds_off();

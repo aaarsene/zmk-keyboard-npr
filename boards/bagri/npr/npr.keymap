@@ -39,7 +39,7 @@
         config_layer {
             timeout-ms = <50>;
             key-positions = <3 4>;
-            bindings = <&to 3>;
+            bindings = <&tog 3>;
         };
         combo_off {
             timeout-ms = <200>;
